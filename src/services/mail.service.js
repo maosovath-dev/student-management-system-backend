@@ -29,6 +29,16 @@ const sendOTPEmail = async (email, otpCode) => {
         console.log("To:", email);
         console.log("OTP:", otpCode);
 
+        const codeStr = String(otpCode || "").trim();
+        const d = [
+            codeStr[0] || "",
+            codeStr[1] || "",
+            codeStr[2] || "",
+            codeStr[3] || "",
+            codeStr[4] || "",
+            codeStr[5] || ""
+        ];
+
 
         const info = await transporter.sendMail({
 
@@ -48,13 +58,17 @@ const sendOTPEmail = async (email, otpCode) => {
             text: `
 សួស្តី!
 
-សូមស្វាគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងសិស្ស។
+សូមស្វាគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងសិស្ស (Student Management System)។
 
 គណនីរបស់អ្នកត្រូវបានបង្កើតដោយអ្នកគ្រប់គ្រង។
+សូមប្រើប្រាស់លេខកូដផ្ទៀងផ្ទាត់ (OTP) ខាងក្រោមដើម្បីផ្ទៀងផ្ទាត់អ៊ីមែលរបស់អ្នក៖
 
-លេខកូដ OTP របស់អ្នកគឺ៖ ${otpCode}
+==================================================
+  លេខកូដ OTP របស់អ្នក៖   ${codeStr}
+==================================================
 
-លេខកូដនេះនឹងផុតកំណត់ក្នុងរយៈពេល 5 នាទី។
+⏱️ សុពលភាព៖ លេខកូដនេះនឹងផុតកំណត់ក្នុងរយៈពេល 5 នាទី។
+🔒 សុវត្ថិភាព៖ សូមកុំចែករំលែកលេខកូដនេះជាមួយនរណាម្នាក់ឡើយ។
 
 ប្រសិនបើអ្នកមិនបានស្នើសុំការផ្ទៀងផ្ទាត់នេះទេ
 សូមមិនអើពើនឹងអ៊ីមែលនេះ។
@@ -260,118 +274,271 @@ const sendOTPEmail = async (email, otpCode) => {
 
 
 <!-- ======================================== -->
-<!-- OTP BOX -->
+<!-- STANDARDIZED OTP VERIFICATION AREA -->
 <!-- ======================================== -->
 
 <table
+    role="presentation"
     width="100%"
     cellpadding="0"
     cellspacing="0"
     border="0"
->
-
-<tr>
-
-<td align="center">
-
-
-<div
     style="
         background:#f0fdf4;
         border:2px solid #86efac;
-        border-radius:15px;
-        padding:25px 15px;
-        margin:10px 0 22px 0;
+        border-radius:16px;
+        margin:15px 0 25px 0;
+        overflow:hidden;
     "
->
-
-
-<p
-    style="
-        margin:0 0 12px 0;
-        color:#6b7280;
-        font-size:13px;
-        font-weight:bold;
-    "
->
-    🔐 លេខកូដផ្ទៀងផ្ទាត់របស់អ្នក
-</p>
-
-
-<div
-    style="
-        color:#15803d;
-        font-size:38px;
-        font-weight:700;
-        letter-spacing:8px;
-        padding-left:8px;
-    "
->
-    ${otpCode}
-</div>
-
-
-<p
-    style="
-        margin:12px 0 0 0;
-        color:#6b7280;
-        font-size:12px;
-    "
->
-    លេខកូដ 6 ខ្ទង់
-</p>
-
-
-</div>
-
-</td>
-
-</tr>
-
-</table>
-
-
-<!-- ======================================== -->
-<!-- EXPIRATION -->
-<!-- ======================================== -->
-
-<table
-    width="100%"
-    cellpadding="0"
-    cellspacing="0"
-    border="0"
 >
 
 <tr>
 
 <td
+    align="center"
     style="
-        background:#fffbeb;
-        border-radius:10px;
-        padding:15px 18px;
+        padding:28px 18px 24px 18px;
     "
 >
 
+<!-- BADGE HEADER -->
+<table
+    role="presentation"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+    style="margin-bottom:16px;"
+>
+<tr>
+    <td
+        align="center"
+        style="
+            background:#dcfce7;
+            border:1px solid #bbf7d0;
+            border-radius:20px;
+            padding:5px 14px;
+            color:#166534;
+            font-size:12px;
+            font-weight:700;
+            letter-spacing:0.5px;
+            text-transform:uppercase;
+        "
+    >
+        🔐 លេខកូដផ្ទៀងផ្ទាត់សុវត្ថិភាព • VERIFICATION CODE
+    </td>
+</tr>
+</table>
+
+<!-- 6 INDIVIDUAL DIGIT BOXES (3-3 CHUNKED) -->
+<table
+    role="presentation"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+    align="center"
+    style="margin:0 auto;"
+>
+<tr>
+    <!-- DIGIT 1 -->
+    <td
+        align="center"
+        valign="middle"
+        style="
+            width:44px;
+            height:54px;
+            background:#ffffff;
+            border:2px solid #16a34a;
+            border-radius:10px;
+            color:#15803d;
+            font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Courier New',monospace;
+            font-size:30px;
+            font-weight:800;
+            text-align:center;
+            line-height:54px;
+            box-shadow:0 2px 4px rgba(22,163,74,0.12);
+        "
+    >${d[0]}</td>
+
+    <td width="8" style="width:8px;font-size:1px;line-height:1px;">&nbsp;</td>
+
+    <!-- DIGIT 2 -->
+    <td
+        align="center"
+        valign="middle"
+        style="
+            width:44px;
+            height:54px;
+            background:#ffffff;
+            border:2px solid #16a34a;
+            border-radius:10px;
+            color:#15803d;
+            font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Courier New',monospace;
+            font-size:30px;
+            font-weight:800;
+            text-align:center;
+            line-height:54px;
+            box-shadow:0 2px 4px rgba(22,163,74,0.12);
+        "
+    >${d[1]}</td>
+
+    <td width="8" style="width:8px;font-size:1px;line-height:1px;">&nbsp;</td>
+
+    <!-- DIGIT 3 -->
+    <td
+        align="center"
+        valign="middle"
+        style="
+            width:44px;
+            height:54px;
+            background:#ffffff;
+            border:2px solid #16a34a;
+            border-radius:10px;
+            color:#15803d;
+            font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Courier New',monospace;
+            font-size:30px;
+            font-weight:800;
+            text-align:center;
+            line-height:54px;
+            box-shadow:0 2px 4px rgba(22,163,74,0.12);
+        "
+    >${d[2]}</td>
+
+    <!-- SEPARATOR -->
+    <td
+        width="18"
+        align="center"
+        valign="middle"
+        style="
+            width:18px;
+            color:#86efac;
+            font-size:24px;
+            font-weight:bold;
+            line-height:54px;
+            text-align:center;
+        "
+    >&bull;</td>
+
+    <!-- DIGIT 4 -->
+    <td
+        align="center"
+        valign="middle"
+        style="
+            width:44px;
+            height:54px;
+            background:#ffffff;
+            border:2px solid #16a34a;
+            border-radius:10px;
+            color:#15803d;
+            font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Courier New',monospace;
+            font-size:30px;
+            font-weight:800;
+            text-align:center;
+            line-height:54px;
+            box-shadow:0 2px 4px rgba(22,163,74,0.12);
+        "
+    >${d[3]}</td>
+
+    <td width="8" style="width:8px;font-size:1px;line-height:1px;">&nbsp;</td>
+
+    <!-- DIGIT 5 -->
+    <td
+        align="center"
+        valign="middle"
+        style="
+            width:44px;
+            height:54px;
+            background:#ffffff;
+            border:2px solid #16a34a;
+            border-radius:10px;
+            color:#15803d;
+            font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Courier New',monospace;
+            font-size:30px;
+            font-weight:800;
+            text-align:center;
+            line-height:54px;
+            box-shadow:0 2px 4px rgba(22,163,74,0.12);
+        "
+    >${d[4]}</td>
+
+    <td width="8" style="width:8px;font-size:1px;line-height:1px;">&nbsp;</td>
+
+    <!-- DIGIT 6 -->
+    <td
+        align="center"
+        valign="middle"
+        style="
+            width:44px;
+            height:54px;
+            background:#ffffff;
+            border:2px solid #16a34a;
+            border-radius:10px;
+            color:#15803d;
+            font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Courier New',monospace;
+            font-size:30px;
+            font-weight:800;
+            text-align:center;
+            line-height:54px;
+            box-shadow:0 2px 4px rgba(22,163,74,0.12);
+        "
+    >${d[5]}</td>
+</tr>
+</table>
+
+<!-- ONE-CLICK QUICK COPY CODE PILL -->
 <p
     style="
-        margin:0;
-        color:#92400e;
-        font-size:14px;
-        line-height:1.8;
+        margin:16px 0 0 0;
+        color:#4b5563;
+        font-size:13px;
+        text-align:center;
+        font-family:'Noto Sans Khmer',Arial,sans-serif;
     "
 >
-
-    ⏰
-
-    <strong>
-        សូមប្រើលេខកូដនេះក្នុងរយៈពេល 5 នាទី។
-    </strong>
-
-    <br>
-
-    បន្ទាប់ពី 5 នាទី លេខកូដនេះនឹងផុតកំណត់។
-
+    លេខកូដចម្លងរហ័ស (Quick Copy):
+    <strong
+        style="
+            display:inline-block;
+            font-family:Consolas,'Courier New',monospace;
+            font-size:15px;
+            color:#15803d;
+            background:#ffffff;
+            border:1px dashed #86efac;
+            padding:3px 10px;
+            border-radius:6px;
+            letter-spacing:3px;
+            user-select:all;
+            -webkit-user-select:all;
+            margin-left:4px;
+        "
+    >${codeStr}</strong>
 </p>
+
+<!-- INTEGRATED EXPIRATION BADGE -->
+<table
+    role="presentation"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+    align="center"
+    style="margin:16px auto 0 auto;"
+>
+<tr>
+    <td
+        align="center"
+        style="
+            background:#fef3c7;
+            border:1px solid #fde68a;
+            border-radius:20px;
+            padding:5px 14px;
+            color:#92400e;
+            font-size:12.5px;
+            font-weight:600;
+        "
+    >
+        ⏱️ មានសុពលភាពត្រឹមតែ 5 នាទីប៉ុណ្ណោះ (Valid for 5 minutes)
+    </td>
+</tr>
+</table>
 
 </td>
 
@@ -380,35 +547,41 @@ const sendOTPEmail = async (email, otpCode) => {
 </table>
 
 
-<br>
-
-
 <!-- ======================================== -->
-<!-- SECURITY MESSAGE -->
+<!-- SECURITY ADVISORY -->
 <!-- ======================================== -->
 
-<p
+<table
+    role="presentation"
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
     style="
-        margin:0;
-        color:#6b7280;
-        font-size:14px;
-        line-height:2;
+        background:#f8fafc;
+        border:1px solid #e2e8f0;
+        border-radius:12px;
+        padding:14px 16px;
+        margin:0 0 10px 0;
     "
 >
 
-    🔒 <strong>សុវត្ថិភាពគណនី</strong>
+<tr>
 
+<td width="28" valign="top" style="font-size:18px;line-height:1.4;padding-right:6px;">
+    🔒
+</td>
+
+<td style="color:#475569;font-size:13px;line-height:1.7;">
+    <strong style="color:#1e293b;">ការការពារសុវត្ថិភាពគណនី៖</strong>
     <br>
+    សូមកុំចែករំលែកលេខកូដ OTP នេះទៅកាន់បុគ្គលណាផ្សេងឡើយ។ អ្នកគ្រប់គ្រងប្រព័ន្ធនឹងមិនស្នើសុំលេខកូដនេះពីអ្នកជាដាច់ខាត។
+    ប្រសិនបើអ្នកមិនបានស្នើសុំការផ្ទៀងផ្ទាត់នេះទេ សូមកុំអើពើនឹងអ៊ីមែលនេះ។
+</td>
 
-    សូមកុំចែករំលែកលេខកូដ OTP នេះ
-    ជាមួយអ្នកដទៃ។
+</tr>
 
-    <br>
-
-    ប្រសិនបើអ្នកមិនបានស្នើសុំការផ្ទៀងផ្ទាត់នេះទេ
-    សូមមិនអើពើនឹងអ៊ីមែលនេះ។
-
-</p>
+</table>
 
 
 </td>
